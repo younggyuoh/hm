@@ -61,21 +61,20 @@ def load_active_users(where_clause):
 # -----------------------------
 def load_retention_data():
     monthly_table = con.execute("""
-        SELECT * FROM s_user_retention_m ORDER BY month_start DESC
+        SELECT month_start, new_user_count, retained_user_count, resurrected_user_count, churned_user_count FROM s_user_retention_m ORDER BY month_start DESC
     """).fetchdf()
     weekly_table = con.execute("""
-        SELECT * FROM s_user_retention_w ORDER BY week_start DESC
+        SELECT week_start, new_user_count, retained_user_count, resurrected_user_count, churned_user_count FROM s_user_retention_w ORDER BY week_start DESC
     """).fetchdf()
 
     monthly_triangle = con.execute("""
-        SELECT * FROM s_user_retention_triangle_m ORDER BY cohort_month, month_offset
+        SELECT cohort_month, month_offset, retained_users, retention_rate FROM s_user_retention_triangle_m ORDER BY cohort_month, month_offset
     """).fetchdf()
     weekly_triangle = con.execute("""
-        SELECT * FROM s_user_retention_triangle_w ORDER BY cohort_week, week_offset
+        SELECT cohort_week, week_offset, retained_users, retention_rate FROM s_user_retention_triangle_w ORDER BY cohort_week, week_offset
     """).fetchdf()
 
     return monthly_table, weekly_table, monthly_triangle, weekly_triangle
-
 
 def create_triangle_display(triangle_df, cohort_col, offset_col):
     pivot_rate = triangle_df.pivot(index=cohort_col, columns=offset_col, values="retention_rate").fillna(0)
