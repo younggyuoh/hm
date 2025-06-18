@@ -1,0 +1,21 @@
+name: 'hm_analytics'
+version: '1.0'
+config-version: 2
+
+profile: 'hm_analytics'
+
+model-paths: ['models']
+analysis-paths: ['analysis']
+test-paths: ['tests']
+data-paths: ['data']
+macro-paths: ['macros']
+snapshot-paths: ['snapshots']
+
+target-path: 'target'
+clean-targets:
+  - 'target'
+  - 'dbt_modules'
+
+
+models:
+  +materialized: table

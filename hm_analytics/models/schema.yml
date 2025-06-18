@@ -1,0 +1,37 @@
+version: 2
+
+sources:
+  - name: manual_loaded
+    schema: main
+    tables:
+      - name: raw_events_d
+        description: Raw user event logs
+      - name: dim_users
+        description: User dimension table
+      - name: dim_date
+        description: Date dimension table
+
+models:
+  - name: fct_events_d
+    description: Fact table containing cleaned daily user event logs for analytics
+  - name: s_user_total_activity_d
+    description: Summary of total user activity (first/last event, total events, miles)
+  - name: s_user_activity_m
+    description: Monthly user activity summary
+  - name: s_user_activity_w
+    description: Weekly user activity summary
+  - name: s_user_retention_m
+    description: Monthly user retention classification (new, retained, churned, resurrected)
+  - name: s_user_retention_w
+    description: Weekly user retention classification (new, retained, churned, resurrected)
+  - name: s_user_retention_triangle_m
+    description: Monthly cohort-based triangle retention summary
+  - name: s_user_retention_triangle_w
+    description: Weekly cohort-based triangle retention summary
+  - name: s_active_users_d
+    description: Daily active user count
+  - name: s_active_users_w
+    description: Weekly active user count
+  - name: s_active_users_m
+    description: Monthly active user count
+
