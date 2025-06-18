@@ -46,13 +46,13 @@ def make_where_clause(country, category):
 def load_active_users(where_clause):
     return {
         "dau": con.execute(f"""
-            SELECT dt AS activity_date, dau FROM s_active_users_d {where_clause} ORDER BY dt
+            SELECT event_date_utc AS activity_date, dau FROM s_active_users_d {where_clause} ORDER BY event_date_utc
         """).fetchdf(),
         "wau": con.execute(f"""
-            SELECT week_start_date AS week, wau FROM s_active_users_w {where_clause} ORDER BY week
+            SELECT concat(week,'(',week_start_date,')') as week, wau FROM s_active_users_w {where_clause} ORDER BY week
         """).fetchdf(),
         "mau": con.execute(f"""
-            SELECT month_start_date AS month, mau FROM s_active_users_m {where_clause} ORDER BY month
+            SELECT month, mau FROM s_active_users_m {where_clause} ORDER BY month
         """).fetchdf(),
     }
 

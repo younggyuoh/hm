@@ -42,7 +42,7 @@ cohort_sizes as (
    group by cohort_week
 )
 
-select r.cohort_week,
+select strftime(cast(r.cohort_week as date) + interval 1 month, '%Y-%m-%d') as cohort_week,
        r.week_offset,
        r.retained_users,
        c.cohort_size,
